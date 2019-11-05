@@ -34,7 +34,7 @@
     "extra":{
         "laravel":{
             "providers": [
-                "CalJect\\Productivity\\Extra\\Laravel\\Providers\\CommandsProvider"
+                "Calject\\LaravelProductivity\\Providers\\CommandsProvider"
             ]
         }
     }
