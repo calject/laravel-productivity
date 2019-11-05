@@ -1,0 +1,41 @@
+{
+    "name": "calject/laravel-productivity",
+    "description":"laravel-productivity",
+    "license": "MIT",
+	"authors": [
+        {
+            "name": "沧澜",
+            "email": "lryhuimeng@163.com"
+        }
+    ],
+	"keywords": [
+        "laravel",
+        "calject",
+        "channly",
+        "utils",
+        "tools",
+        "productivity",
+        "productivity tools"
+    ],
+    "require": {
+		"php": "^7.0",
+        "calject/productivity": "^0.2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Calject\\LaravelProductivity\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Calject\\LaravelProductivity\\Test\\": "test"
+        }
+    },
+    "extra":{
+        "laravel":{
+            "providers": [
+                "CalJect\\Productivity\\Extra\\Laravel\\Providers\\CommandsProvider"
+            ]
+        }
+    }
+}
