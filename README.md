@@ -1,5 +1,9 @@
 # laravel-productivity
 
+## v0.2.*
+
+> 添加路由注解实现`AnnotationRoute`
+
 ## v0.1.*
 
 ### 一、Components
@@ -66,7 +70,8 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
     'value1' => 'required|string',
     'value2' => 'json'
 ])->rules();
-/** 
+
+/** 生成结果:
  array:4 [▼
    "value1" => "required|string"
    "value2" => "json"
@@ -75,6 +80,43 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
  ]
 */
 
+```
+
+### `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
+
+#### 注册实现
+* `config/app.php` => 'providers' 属性中添加`AnnotationRouteLocalProvider`或`AnnotationRouteProvider`服务提供者
+
+> `AnnotationRouteLocalProvider`仅在env环境为local中生效
+> `AnnotationRouteProvider` 在所有环境中生效
+> 通过`AnnotationRoute`的`env`方法设置
+
+#### 自定义实现
+* `app/Providers/RouteServiceProvider.php` 中添加注解实现`AnnotationRoute`
+
+```php
+    /**
+     * Define the routes for the application.
+     *
+     * @return void
+     */
+    public function map()
+    {
+        $this->mapApiRoutes();
+
+        $this->mapCreditRoutes();
+
+        $this->mapDevelopRoutes();
+        
+        $this->mapTestRoutes();
+        
+        // 添加注解实现
+        $annotationRoute = new AnnotationRoute();
+        // $annotationRoute->envs('local');    // 设置生效环境
+        // $annotationRoute->envs(['local', 'develop']);    // 设置生效环境
+        $annotationRoute->mapRefRoutes();
+    
+    }
 ```
 
 ### 二、Commands
