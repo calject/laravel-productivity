@@ -4,7 +4,7 @@
  * Date: 2019-10-14
  */
 
-namespace Calject\LaravelProductivity\Component\Validator;
+namespace Calject\LaravelProductivity\Components\Validator;
 
 use CalJect\Productivity\Contracts\Instance\Singleton\AbsSingleton;
 use Calject\LaravelProductivity\Contracts\Validator\IConstraint;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Lang;
 
 /**
  * Class Constraint
- * @package Calject\LaravelProductivity\Component\Validator
+ * @package Calject\LaravelProductivity\Components\Validator
  * laravel Lang 验证规则数组类
  */
 final class Constraint extends AbsSingleton implements IConstraint

@@ -4,11 +4,11 @@
  * Date: 2019-10-14
  */
 
-namespace Calject\LaravelProductivity\Component\Rules;
+namespace Calject\LaravelProductivity\Components\Rules;
 
 /**
  * Class Rule
- * @package Calject\LaravelProductivity\Component\Rules
+ * @package Calject\LaravelProductivity\Components\Rules
  */
 class Rule
 {

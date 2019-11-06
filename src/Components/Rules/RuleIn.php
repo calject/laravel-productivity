@@ -4,13 +4,13 @@
  * Date: 2019-10-14
  */
 
-namespace Calject\LaravelProductivity\Component\Rules;
+namespace Calject\LaravelProductivity\Components\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
 /**
  * Class RuleIn
- * @package Calject\LaravelProductivity\Component\Rules
+ * @package Calject\LaravelProductivity\Components\Rules
  */
 class RuleIn implements Rule
 {

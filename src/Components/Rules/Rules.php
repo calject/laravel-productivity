@@ -4,14 +4,14 @@
  * Date: 2019-10-14
  */
 
-namespace Calject\LaravelProductivity\Component\Rules;
+namespace Calject\LaravelProductivity\Components\Rules;
 
 use CalJect\Productivity\Contracts\Instance\Singleton\AbsSingleton;
 use Illuminate\Support\Facades\Lang;
 
 /**
  * Class Rules
- * @package Calject\LaravelProductivity\Component\Rules
+ * @package Calject\LaravelProductivity\Components\Rules
  */
 class Rules extends AbsSingleton
 {

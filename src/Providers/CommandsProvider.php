@@ -9,6 +9,7 @@ namespace Calject\LaravelProductivity\Providers;
 use Calject\LaravelProductivity\Consoles\Commands\DataCommentCommand;
 use Calject\LaravelProductivity\Consoles\Commands\EnvConfigCommand;
 use Calject\LaravelProductivity\Consoles\Commands\ModelCommentCommand;
+use Calject\LaravelProductivity\Consoles\Commands\RouteNameCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**

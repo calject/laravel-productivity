@@ -4,7 +4,7 @@
  * Date: 2019-10-14
  */
 
-namespace Calject\LaravelProductivity\Component\Validator;
+namespace Calject\LaravelProductivity\Components\Validator;
 
 
 use CalJect\Productivity\Components\Criteria\Criteria;
@@ -19,7 +19,7 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * Class Validator
- * @package Calject\LaravelProductivity\Component\Validator
+ * @package Calject\LaravelProductivity\Components\Validator
  * 自定义laravel验证器拓展
  */
 class Validator implements IValidate

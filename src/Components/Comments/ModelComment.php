@@ -4,7 +4,7 @@
  * Date: 2019-10-25
  */
 
-namespace Calject\LaravelProductivity\Component\Comments;
+namespace Calject\LaravelProductivity\Components\Comments;
 
 use CalJect\Productivity\Constants\MysqlConstant;
 use CalJect\Productivity\Contracts\Comments\ClassHeadComment;
@@ -15,7 +15,7 @@ use ReflectionClass;
 
 /**
  * Class ModelComments
- * @package Calject\LaravelProductivity\Component\Comments
+ * @package Calject\LaravelProductivity\Components\Comments
  */
 class ModelComment extends ClassHeadComment
 {
