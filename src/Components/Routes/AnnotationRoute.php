@@ -8,6 +8,7 @@ namespace Calject\LaravelProductivity\Components\Routes;
 
 
 use CalJect\Productivity\Components\DataProperty\CallDataProperty;
+use CalJect\Productivity\Contracts\DataProperty\TCallDataPropertyByName;
 use CalJect\Productivity\Utils\GeneratorFileLoad;
 use Closure;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ use ReflectionMethod;
  */
 class AnnotationRoute extends CallDataProperty
 {
+    use TCallDataPropertyByName;
     /**
      * @var string
      */
@@ -108,7 +110,10 @@ class AnnotationRoute extends CallDataProperty
                 }
                 $router->group(function () use ($methodRoutes){
                     foreach ($methodRoutes as $key => $methodRoute) {
-                        $method = explode(',', $methodRoute['method']);
+                        if (!isset($methodRoute['api'])) {
+                            continue;
+                        }
+                        $method = explode(',', $methodRoute['method'] ?? 'any');
                         if (count($method) > 1) {
                             $route = Route::match($method, $methodRoute['api'], $methodRoute['action']);
                         } else {
