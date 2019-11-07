@@ -1,5 +1,11 @@
 # laravel-productivity
 
+## 安装
+
+```composer
+composer require calject/laravel-productivity
+```
+
 ## v0.2.*
 
 > 添加路由注解实现`AnnotationRoute`
