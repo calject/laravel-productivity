@@ -152,7 +152,7 @@ class AnnotationRoute extends CallDataProperty
      */
     public static function matchTagTextContent(string $docComment, string $tag, $default = false)
     {
-        if (preg_match('/\*[ ]*@' . $tag . "\('?([^']*)'?\)\n/", $docComment, $tagComment) && $tagComment[1]) {
+        if (preg_match('/\*[ ]*@' . $tag . "\('?([^'()]*)'?\)\n/", $docComment, $tagComment) && $tagComment[1]) {
             return $tagComment[1];
         } else {
             return $default;
@@ -166,7 +166,7 @@ class AnnotationRoute extends CallDataProperty
      */
     public static function matchKeyValues(string $docComment, $default = false)
     {
-        if (preg_match_all("/(\w*)='([^']*)'/", $docComment, $values) && $values[1]) {
+        if (preg_match_all("/(\w*)='([^'()]*)'/", $docComment, $values) && $values[1]) {
             return array_combine($values[1], $values[2]);
         } else {
             return $default;
@@ -180,7 +180,7 @@ class AnnotationRoute extends CallDataProperty
      */
     public static function matchTagKeyValues(string $docComment, $default = false)
     {
-        if (preg_match_all("/\*[ ]*@(\w*)\('?([^']*)'?\)\n/", $docComment, $tagComment) && $tagComment[0]) {
+        if (preg_match_all("/\*[ ]*@(\w*)\('?([^'()]*)'?\)\n/", $docComment, $tagComment) && $tagComment[0]) {
             return array_combine($tagComment[1], $tagComment[2]);
         } else {
             return $default;
@@ -195,7 +195,7 @@ class AnnotationRoute extends CallDataProperty
      */
     public static function matchValue(string $docComment, $default = false, Closure $handle = null)
     {
-        if (preg_match("/'?(.*)'?/", $docComment, $values) && $values[1]) {
+        if (preg_match("/'?([^'()]*)'?/", $docComment, $values) && $values[1]) {
             return $handle ? call_user_func($handle, $values[1]) : $values[1];
         } else {
             return $default;
