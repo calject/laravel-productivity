@@ -82,14 +82,14 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
 
 ```
 
-### `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
+### 注解路由实现 
 
-#### 注册实现
+> `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
+
+#### 服务提供者注册实现
 * `config/app.php` => 'providers' 属性中添加`AnnotationRouteLocalProvider`或`AnnotationRouteProvider`服务提供者
 
-> `AnnotationRouteLocalProvider`仅在env环境为local中生效
-> `AnnotationRouteProvider` 在所有环境中生效
-> 通过`AnnotationRoute`的`env`方法设置
+> `AnnotationRouteLocalProvider`仅在env环境为local中生效, `AnnotationRouteProvider` 在所有环境中生效, 可通过`AnnotationRoute`的`env`方法设置
 
 #### 自定义实现
 * `app/Providers/RouteServiceProvider.php` 中添加注解实现`AnnotationRoute`
@@ -118,6 +118,81 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
     
     }
 ```
+
+#### 使用
+
+* Class顶部注释(可选)
+    * @route()
+        * prefix(string  $prefix)
+            * `prefix='test'`
+        * middleware(string $middleware)
+            * `middleware='api'`、`middleware='api,mid,mid2'`
+    * 示例
+        * `@route(prefix='test', middleware='api,mid,mid2')`
+        
+* Method 可选注释
+    * @api(string $path)
+        * `@api('test/TestA')`、`@api(test/TestA)`
+    * @method(string $method)
+        * `@method('get')`、`@method('get,post,put,delete')`
+    * @middleware(string $middleware)
+        * `@middleware('test')`、`@middleware('test,mid,mid2')`
+    * @name(string $value)
+        * `@name('TestControllerTestA')`、 `@name(TestControllerTestA)`
+    * @prefix(string  $prefix)
+        * `@prefix('test')`、 `@prefix(test)`
+
+* 示例        
+
+```php
+<?php
+namespace App\Http\Controllers\Test;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+/**
+ * Class TestRouterController
+ * @package App\Http\Controllers\Test
+ * @route(prefix='test', middleware='api,mid,mid2')
+ */
+class TestController extends Controller 
+{
+    /**
+     * @param Request $request
+     * @return ResponseFactory|Response
+     * @api('testA')
+     * @name(testA)
+     */
+    public function testA(Request $request)
+    {
+        return response('testA');
+    }
+    
+    /**
+     * @param Request $request 
+     * @return ResponseFactory|Response 
+     * @route(api='testD', method='get,post,put', name='testD')
+     * @middleware(testD)
+     */
+    public function testD(Request $request)
+    {
+        return response('testD');
+    }    
+}
+```
+
+* `php artisan route:list`
+
+```
++--------+----------------------------------------+-----------------------------+-------+---------------------------------------------------------------------+---------------+
+| Domain | Method                                 | URI                         | Name  | Action                                                              | Middleware    |
++--------+----------------------------------------+-----------------------------+-------+---------------------------------------------------------------------+---------------+
+|        | GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS | test/testA                  | testA | App\Http\Controllers\Test\TestRouterController@testA                | api,mid       |
+|        | GET|POST|PUT|HEAD                      | test/testD                  | testD | App\Http\Controllers\Test\TestRouterController@testD                | api,mid,testD |
++--------+----------------------------------------+-----------------------------+-------+---------------------------------------------------------------------+---------------+
+```
+
 
 ### 二、Commands
 
