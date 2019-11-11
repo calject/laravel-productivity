@@ -19,7 +19,7 @@
     ],
     "require": {
 		"php": "^7.0",
-        "calject/productivity": "^0.2.4"
+        "calject/productivity": "^0.2.5"
     },
     "autoload": {
         "psr-4": {

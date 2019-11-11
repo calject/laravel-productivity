@@ -7,10 +7,10 @@
 namespace Calject\LaravelProductivity\Components\Routes;
 
 
+use CalJect\Productivity\Components\Annotations\AnnotationTag;
 use CalJect\Productivity\Components\DataProperty\CallDataProperty;
 use CalJect\Productivity\Contracts\DataProperty\TCallDataPropertyByName;
 use CalJect\Productivity\Utils\GeneratorFileLoad;
-use Closure;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 use ReflectionMethod;
@@ -81,20 +81,20 @@ class AnnotationRoute extends CallDataProperty
             $refClass = new ReflectionClass($className);
             if ($docComment = $refClass->getDocComment()) {
                 /* ======== 匹配route ======== */
-                if ($routeComment = self::matchTagContent($docComment, 'route')) {
-                    $classParams = self::matchKeyValues($routeComment, self::matchValue($routeComment, [], function ($value) {
+                if ($routeComment = AnnotationTag::matchTagContent($docComment, 'route')) {
+                    $classParams = AnnotationTag::matchKeyValues($routeComment, AnnotationTag::matchValue($routeComment, [], function ($value) {
                         return ['prefix' => $value];
                     }));
                 }
             }
             array_map(function (ReflectionMethod $refMethod) use (&$methodRoutes, $className) {
                 if ($docComment = $refMethod->getDocComment()) {
-                    if ($routeComment = self::matchTagContent($docComment, 'route')) {
-                        $methodParams = self::matchKeyValues($routeComment, self::matchValue($routeComment, [], function ($value) {
+                    if ($routeComment = AnnotationTag::matchTagContent($docComment, 'route')) {
+                        $methodParams = AnnotationTag::matchKeyValues($routeComment, AnnotationTag::matchValue($routeComment, [], function ($value) {
                             return ['api' => $value];
                         }));
                     }
-                    if ($methodParams = self::matchTagKeyValues($docComment, []) + ($methodParams ?? [])) {
+                    if ($methodParams = AnnotationTag::matchTagKeyValues($docComment, []) + ($methodParams ?? [])) {
                         $methodParams['action'] = ltrim(str_replace($this->namespace, '', $className).'@'.$refMethod->getName(), '\\');
                         $methodRoutes[] = $methodParams;
                     }
@@ -127,78 +127,5 @@ class AnnotationRoute extends CallDataProperty
                 });
             }
         });
-    }
-    
-    /**
-     * @param string $docComment
-     * @param string $tag
-     * @param mixed $default
-     * @return string|mixed
-     */
-    public static function matchTagContent(string $docComment, string $tag, $default = false)
-    {
-        if (preg_match('/\*[ ]*@' . $tag . '\((.*)\)\\n/', $docComment, $tagComment) && $tagComment[1]) {
-            return $tagComment[1];
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * @param string $docComment
-     * @param string $tag
-     * @param mixed $default
-     * @return array|mixed
-     */
-    public static function matchTagTextContent(string $docComment, string $tag, $default = false)
-    {
-        if (preg_match('/\*[ ]*@' . $tag . "\('?([^'()]*)'?\)\n/", $docComment, $tagComment) && $tagComment[1]) {
-            return $tagComment[1];
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * @param string $docComment
-     * @param mixed $default
-     * @return array|mixed
-     */
-    public static function matchKeyValues(string $docComment, $default = false)
-    {
-        if (preg_match_all("/(\w*)='([^'()]*)'/", $docComment, $values) && $values[1]) {
-            return array_combine($values[1], $values[2]);
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * @param string $docComment
-     * @param mixed $default
-     * @return array|mixed
-     */
-    public static function matchTagKeyValues(string $docComment, $default = false)
-    {
-        if (preg_match_all("/\*[ ]*@(\w*)\('?([^'()]*)'?\)\n/", $docComment, $tagComment) && $tagComment[0]) {
-            return array_combine($tagComment[1], $tagComment[2]);
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * @param string $docComment
-     * @param mixed $default
-     * @param Closure $handle
-     * @return bool|mixed
-     */
-    public static function matchValue(string $docComment, $default = false, Closure $handle = null)
-    {
-        if (preg_match("/'?([^'()]*)'?/", $docComment, $values) && $values[1]) {
-            return $handle ? call_user_func($handle, $values[1]) : $values[1];
-        } else {
-            return $default;
-        }
     }
 }

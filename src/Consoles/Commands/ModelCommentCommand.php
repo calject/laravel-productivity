@@ -7,7 +7,7 @@
 namespace Calject\LaravelProductivity\Consoles\Commands;
 
 use CalJect\Productivity\Components\Check\CkDef;
-use Calject\LaravelProductivity\Component\Comments\ModelComment;
+use Calject\LaravelProductivity\Components\Comments\ModelComment;
 use Calject\LaravelProductivity\Contracts\Commands\Command;
 use ReflectionException;
 
