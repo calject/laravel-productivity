@@ -82,6 +82,7 @@ class AnnotationRoute extends CallDataProperty
             if (!class_exists($className) || !is_subclass_of($className, 'App\Http\Controllers\Controller')) {
                 goto end;
             }
+            /* ======== 解析路由注解 ======== */
             $refClass = new ReflectionClass($className);
             $classParams = $this->matchTagContent($refClass->getDocComment(), 'prefix', []);
             array_map(function (ReflectionMethod $refMethod) use (&$methodRoutes, $className) {
@@ -90,6 +91,7 @@ class AnnotationRoute extends CallDataProperty
                     $methodRoutes[] = $methodParams;
                 }
             }, $refClass->getMethods());
+            /* ======== 注册路由 ======== */
             if ($methodRoutes) {
                 $router = Route::namespace($this->namespace);
                 if ($classParams) {
@@ -129,7 +131,9 @@ class AnnotationRoute extends CallDataProperty
     protected function matchTagContent($docComment, string $key, $default = null)
     {
         if ($docComment) {
-            return AnnotationTag::matchTagKeyValues($docComment, []) + $this->matchRouteContent($docComment, $this->defWithArrValue($key), []);
+            $tags = AnnotationTag::matchTagKeyValues($docComment, []) + $this->matchRouteContent($docComment, $this->defWithArrValue($key), []);
+            unset($tags['route']);
+            return $tags;
         } else {
             return $default;
         }
