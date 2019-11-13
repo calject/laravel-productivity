@@ -11,6 +11,7 @@ use CalJect\Productivity\Components\Annotations\AnnotationTag;
 use CalJect\Productivity\Components\DataProperty\CallDataProperty;
 use CalJect\Productivity\Contracts\DataProperty\TCallDataPropertyByName;
 use CalJect\Productivity\Utils\GeneratorFileLoad;
+use Closure;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 use ReflectionMethod;
@@ -78,32 +79,20 @@ class AnnotationRoute extends CallDataProperty
     {
         (new GeneratorFileLoad($controllerPath))->eachFiles(function ($filePath) use ($controllerPath) {
             $className = rtrim(str_replace('/', '\\', str_replace($controllerPath, $this->namespace, $filePath)), '.php');
-            $refClass = new ReflectionClass($className);
-            if ($docComment = $refClass->getDocComment()) {
-                /* ======== 匹配route ======== */
-                if ($routeComment = AnnotationTag::matchTagContent($docComment, 'route')) {
-                    $classParams = AnnotationTag::matchKeyValues($routeComment, AnnotationTag::matchValue($routeComment, [], function ($value) {
-                        return ['prefix' => $value];
-                    }));
-                }
+            if (!class_exists($className) || !is_subclass_of($className, 'App\Http\Controllers\Controller')) {
+                goto end;
             }
+            $refClass = new ReflectionClass($className);
+            $classParams = $this->matchTagContent($refClass->getDocComment(), 'prefix', []);
             array_map(function (ReflectionMethod $refMethod) use (&$methodRoutes, $className) {
-                if ($docComment = $refMethod->getDocComment()) {
-                    if ($routeComment = AnnotationTag::matchTagContent($docComment, 'route')) {
-                        $methodParams = AnnotationTag::matchKeyValues($routeComment, AnnotationTag::matchValue($routeComment, [], function ($value) {
-                            return ['api' => $value];
-                        }));
-                    }
-                    if ($methodParams = AnnotationTag::matchTagKeyValues($docComment, []) + ($methodParams ?? [])) {
-                        $methodParams['action'] = ltrim(str_replace($this->namespace, '', $className).'@'.$refMethod->getName(), '\\');
-                        $methodRoutes[] = $methodParams;
-                    }
-                
+                if ($methodParams = $this->matchTagContent($refMethod->getDocComment(), 'api')) {
+                    $methodParams['action'] = ltrim(str_replace($this->namespace, '', $className).'@'.$refMethod->getName(), '\\');
+                    $methodRoutes[] = $methodParams;
                 }
             }, $refClass->getMethods());
             if ($methodRoutes) {
                 $router = Route::namespace($this->namespace);
-                if (isset($classParams)) {
+                if ($classParams) {
                     foreach ($classParams as $property => $values) {
                         $router->{$property}($values);
                     }
@@ -126,6 +115,50 @@ class AnnotationRoute extends CallDataProperty
                     }
                 });
             }
+            end:
         });
+    }
+    
+    /**
+     * 匹配所有注解相关[@tag(...)]内容并合并
+     * @param string $docComment    doc comment
+     * @param string $key           content key
+     * @param mixed|null $default   default
+     * @return array|mixed|null
+     */
+    protected function matchTagContent($docComment, string $key, $default = null)
+    {
+        if ($docComment) {
+            return AnnotationTag::matchTagKeyValues($docComment, []) + $this->matchRouteContent($docComment, $this->defWithArrValue($key), []);
+        } else {
+            return $default;
+        }
+    }
+    
+    /**
+     * 匹配route注解内容
+     * @param string $docComment    doc comment
+     * @param Closure $doDefault    function($value) {}
+     * @param mixed|null $default   default
+     * @return array|null
+     */
+    protected function matchRouteContent($docComment, Closure $doDefault, $default = null)
+    {
+        if ($routeComment = AnnotationTag::matchTagContent($docComment, 'route')) {
+            return AnnotationTag::matchKeyValues($routeComment, AnnotationTag::matchValue($routeComment, [], $doDefault));
+        } else {
+            return $default;
+        }
+    }
+    
+    /**
+     * @param string $keyName
+     * @return Closure
+     */
+    protected function defWithArrValue(string $keyName)
+    {
+        return function ($value) use ($keyName) {
+            return [$keyName => $value];
+        };
     }
 }
