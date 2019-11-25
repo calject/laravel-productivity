@@ -2,9 +2,14 @@
 
 
 * [安装](#安装)
-* [一、Components](Components)
-
-
+* [一、Components](#一Components)
+    * [1. Rules](#Rules)
+    * [2. 注解路由实现](#注解路由实现)
+* [二、Commands](#二Commands)
+    * [1. 创建类顶部注释](#calject:comment:data)
+    * [2. 创建数据库模型字段注释](#calject:comment:model)
+    * [3. 生成env映射配置文件](#calject:config:env)
+    * [4. 查看队列列表](#calject:queue:list)
 
 ## <span id="install">安装</span>
 
@@ -14,16 +19,16 @@ composer require calject/laravel-productivity
 
 ## v0.2.5
 
-> 添加队列显示命令 [`calject:queue:list`](#calject-queue-list)
+> 添加队列显示命令 [`calject:queue:list`](#calject:queue:list-显示队列列表)
 
 
 ## v0.2.*
 
 > 添加路由注解实现`AnnotationRoute`
 
-### <span id="components">Components</span>
+### <span id="components">一、Components</span>
 
-#### `Rules`
+#### <span id="Rules">`Rules`</span>
 
 > 示例:
 > 在`resources/lang/en`或者`resources/lang/en`(根据app.php配置)下定义键及验证规则
@@ -97,7 +102,7 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
 
 ```
 
-### 注解路由实现 
+### <span id="annotationRoute">注解路由实现</span>
 
 > `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
 
@@ -197,7 +202,7 @@ class TestController extends Controller
 }
 ```
 
-* `php artisan route:list`
+* 执行`php artisan route:list`查看路由列表
 
 ```
 +--------+----------------------------------------+-----------------------------+-------+---------------------------------------------------------------------+---------------+
@@ -209,9 +214,11 @@ class TestController extends Controller
 ```
 
 
-### 二、Commands
+### <span id="commands">二、Commands</span>
 
-#### `calject:comment:data` 创建类属性顶部(get/set/apt/property)注释
+#### <span id="commant-data">`calject:comment:data`</span>
+
+* 创建类属性顶部(get/set/apt/property)注释
 
 ```
 Description:
@@ -287,7 +294,9 @@ class AnnotationRoute extends CallDataProperty
 }
 ```
 
-#### `calject:comment:model` 创建数据库模型类属性注释
+#### <span id="commant-model">`calject:comment:model`</span>
+
+* 创建数据库模型类属性注释
 
 ```
 Description:
@@ -342,7 +351,9 @@ class TestModel extends Model
 }
 ```
 
-#### `calject:config:env`根据`.env`文件生成`config/env.php`文件
+#### <span id="config-env">`calject:config:env`</span>
+
+* 根据`.env`文件生成`config/env.php`文件
 
 * 生成示例
 
@@ -390,7 +401,9 @@ return [
 ];
 ```
 
-#### <span id="expand">`calject:queue:list`</span>  显示队列列表
+#### <span id="expand">`calject:queue:list`</span>
+
+* 显示队列关系列表
 
 ```
 Description:
