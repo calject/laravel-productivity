@@ -28,7 +28,7 @@ composer require calject/laravel-productivity
 
 ### <span id="components">一、Components</span>
 
-#### <span id="Rules">`Rules`</span>
+#### 1. <span id="Rules">`Rules`</span>
 
 > 示例:
 > 在`resources/lang/en`或者`resources/lang/en`(根据app.php配置)下定义键及验证规则
@@ -102,7 +102,7 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
 
 ```
 
-### <span id="annotationRoute">注解路由实现</span>
+### 2. <span id="annotationRoute">注解路由实现</span>
 
 > `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
 
@@ -216,7 +216,7 @@ class TestController extends Controller
 
 ### <span id="commands">二、Commands</span>
 
-#### <span id="commant-data">`calject:comment:data`</span>
+#### 1. <span id="commant-data">`calject:comment:data`</span>
 
 * 创建类属性顶部(get/set/apt/property)注释
 
@@ -294,7 +294,7 @@ class AnnotationRoute extends CallDataProperty
 }
 ```
 
-#### <span id="commant-model">`calject:comment:model`</span>
+#### 2. <span id="commant-model">`calject:comment:model`</span>
 
 * 创建数据库模型类属性注释
 
@@ -351,7 +351,7 @@ class TestModel extends Model
 }
 ```
 
-#### <span id="config-env">`calject:config:env`</span>
+#### 3. <span id="config-env">`calject:config:env`</span>
 
 * 根据`.env`文件生成`config/env.php`文件
 
@@ -401,7 +401,7 @@ return [
 ];
 ```
 
-#### <span id="expand">`calject:queue:list`</span>
+#### 4. <span id="expand">`calject:queue:list`</span>
 
 * 显示队列关系列表
 
