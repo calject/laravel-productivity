@@ -3,13 +3,13 @@
 
 * [安装](#安装)
 * [一、Components](#一components)
-    * [1. Rules](#rules)
-    * [2. 注解路由实现](#注解路由实现)
+    * [1. Rules](#1rules)
+    * [2. 注解路由实现](#2注解路由实现)
 * [二、Commands](#二commands)
-    * [1. 创建类顶部注释](#caljectcommentdata)
-    * [2. 创建数据库模型字段注释](#caljectcommentmodel)
-    * [3. 生成env映射配置文件](#caljectconfigenv)
-    * [4. 查看队列列表](#caljectqueuelist)
+    * [1. 创建类顶部注释](#1caljectcommentdata)
+    * [2. 创建数据库模型字段注释](#2caljectcommentmodel)
+    * [3. 生成env映射配置文件](#3caljectconfigenv)
+    * [4. 查看队列列表](#4caljectqueuelist)
 
 ## <span id="install">安装</span>
 
@@ -28,7 +28,7 @@ composer require calject/laravel-productivity
 
 ### <span id="components">一、Components</span>
 
-#### 1. <span id="Rules">`Rules`</span>
+#### <span id="Rules">1.`Rules`</span>
 
 > 示例:
 > 在`resources/lang/en`或者`resources/lang/en`(根据app.php配置)下定义键及验证规则
@@ -102,7 +102,7 @@ $rules = Rules::get(['ssss', 'uuuu'])->with([
 
 ```
 
-### 2. <span id="annotationRoute">注解路由实现</span>
+### <span id="annotationRoute">2.注解路由实现</span>
 
 > `AnnotationRouteLocalProvider`、`AnnotationRouteProvider`、`AnnotationRoute`
 
@@ -216,7 +216,7 @@ class TestController extends Controller
 
 ### <span id="commands">二、Commands</span>
 
-#### 1. <span id="commant-data">`calject:comment:data`</span>
+#### <span id="commant-data">1.`calject:comment:data`</span>
 
 * 创建类属性顶部(get/set/apt/property)注释
 
@@ -294,7 +294,7 @@ class AnnotationRoute extends CallDataProperty
 }
 ```
 
-#### 2. <span id="commant-model">`calject:comment:model`</span>
+#### <span id="commant-model">2.`calject:comment:model`</span>
 
 * 创建数据库模型类属性注释
 
@@ -351,7 +351,7 @@ class TestModel extends Model
 }
 ```
 
-#### 3. <span id="config-env">`calject:config:env`</span>
+#### <span id="config-env">3.`calject:config:env`</span>
 
 * 根据`.env`文件生成`config/env.php`文件
 
