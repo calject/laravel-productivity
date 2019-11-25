@@ -9,6 +9,7 @@ namespace Calject\LaravelProductivity\Providers;
 use Calject\LaravelProductivity\Consoles\Commands\DataCommentCommand;
 use Calject\LaravelProductivity\Consoles\Commands\EnvConfigCommand;
 use Calject\LaravelProductivity\Consoles\Commands\ModelCommentCommand;
+use Calject\LaravelProductivity\Consoles\Commands\QueueListCommand;
 use Calject\LaravelProductivity\Consoles\Commands\RouteNameCommand;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,7 @@ class CommandsProvider extends ServiceProvider
                 ModelCommentCommand::class,
                 DataCommentCommand::class,
                 EnvConfigCommand::class,
+                QueueListCommand::class,
             ]);
         }
     }
