@@ -2,7 +2,7 @@
 
 
 * [安装](#安装)
-* [一、Components](一Components)
+* [一、Components](Components)
 
 
 
@@ -14,14 +14,14 @@ composer require calject/laravel-productivity
 
 ## v0.2.5
 
-> 添加队列显示命令 [`calject:queue:list`](#calject:queue:list)
+> 添加队列显示命令 [`calject:queue:list`](#calject-queue-list)
 
 
 ## v0.2.*
 
 > 添加路由注解实现`AnnotationRoute`
 
-### <span id="components">一、Components</span>
+### <span id="components">Components</span>
 
 #### `Rules`
 
