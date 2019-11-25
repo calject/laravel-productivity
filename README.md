@@ -19,7 +19,7 @@ composer require calject/laravel-productivity
 
 ## v0.2.5
 
-> 添加队列显示命令 [`calject:queue:list`](#calject:queue:list-显示队列列表)
+> 添加队列显示命令 [`calject:queue:list`](#caljectqueuelist)
 
 
 ## v0.2.*
