@@ -29,18 +29,33 @@ class QueueListCommand extends Command
     {
         $dirPath = app_path('Jobs');
         if (is_dir($dirPath)) {
-            (new GeneratorFileLoad($dirPath))->eachFiles(function ($filePath) {
+            (new GeneratorFileLoad($dirPath))->eachFiles(function ($filePath) use ($dirPath, &$queueList, &$jobList) {
+                if (!file_exists($filePath) || strpos($filePath, '.php') === false) {
+                    return;
+                }
                 $fileContent = file_get_contents($filePath);
-                preg_match("/(?:private|protected|public)[ ]+\$queue[ =]*['\"]+(\w)+['\"]+/", $fileContent, $property);
-                if ($property && isset($property[1])) {
-                
+                $class = rtrim(str_replace('/', '\\', str_replace($dirPath, 'App\Jobs', $filePath)), '.php');
+                $info['class'] = $class;
+                $info['path'] = $filePath;
+                if (preg_match("/\\\$this->onQueue\(['\"]+(\w+)['\"]+\)/", $fileContent, $func)) {
+                    $queueList[$func[1]][] = $info;
+                } else if (preg_match("/(?:private|protected|public)[ ]+\\\$queue[ =]*['\"]+(\w+)['\"]+/", $fileContent, $property)) {
+                    $queueList[$property[1]][] = $info;
+                } else {
+                    $queueList['default'][] = $info;
                 }
-                preg_match("/\$this->onQueue\(['\"]+(\w)['\"]+\)/", $fileContent, $func);
-                if ($func && isset($func[1])) {
-                
-                }
-                
             });
+            if ($queueList) {
+                foreach ($queueList as $queue => $items) {
+                    foreach ($items as $index => $item) {
+                        array_unshift($item, $index == 0 ? $queue : '');
+                        $rows[] = $item;
+                    }
+                }
+                $this->table(['queue', 'class', 'path'], $rows ?? []);
+            } else {
+                $this->error("未订生成任何Job类");
+            }
         } else {
             $this->error("Jobs 目录不存在.");
         }
