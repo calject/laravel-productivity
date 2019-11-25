@@ -2,14 +2,14 @@
 
 
 * [安装](#安装)
-* [一、Components](#一Components)
-    * [1. Rules](#Rules)
+* [一、Components](#一components)
+    * [1. Rules](#rules)
     * [2. 注解路由实现](#注解路由实现)
-* [二、Commands](#二Commands)
-    * [1. 创建类顶部注释](#calject:comment:data)
-    * [2. 创建数据库模型字段注释](#calject:comment:model)
-    * [3. 生成env映射配置文件](#calject:config:env)
-    * [4. 查看队列列表](#calject:queue:list)
+* [二、Commands](#二commands)
+    * [1. 创建类顶部注释](#caljectcommentdata)
+    * [2. 创建数据库模型字段注释](#caljectcommentmodel)
+    * [3. 生成env映射配置文件](#caljectconfigenv)
+    * [4. 查看队列列表](#caljectqueuelist)
 
 ## <span id="install">安装</span>
 
