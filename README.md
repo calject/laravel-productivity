@@ -401,7 +401,7 @@ return [
 ];
 ```
 
-#### 4. <span id="expand">`calject:queue:list`</span>
+#### <span id="expand">4.`calject:queue:list`</span>
 
 * 显示队列关系列表
 
