@@ -1,18 +1,27 @@
 # laravel-productivity
 
-## 安装
+
+* [安装](#安装)
+* [一、Components](一Components)
+
+
+
+## <span id="install">安装</span>
 
 ```composer
 composer require calject/laravel-productivity
 ```
 
+## v0.2.5
+
+> 添加队列显示命令 [`calject:queue:list`](#calject:queue:list)
+
+
 ## v0.2.*
 
 > 添加路由注解实现`AnnotationRoute`
 
-## v0.1.*
-
-### 一、Components
+### <span id="components">一、Components</span>
 
 #### `Rules`
 
@@ -379,6 +388,29 @@ return [
 	'MIX_PUSHER_APP_KEY' => env('MIX_PUSHER_APP_KEY'),
 	'MIX_PUSHER_APP_CLUSTER' => env('MIX_PUSHER_APP_CLUSTER'),
 ];
+```
+
+#### <span id="expand">`calject:queue:list`</span>  显示队列列表
+
+```
+Description:
+  查询匹配所有已定义队列
+
+Usage:
+  calject:queue:list
+```
+* 示例
+
+```
++-------+-------------------+-----------------------------------------------------------+
+| queue | class             | path                                                      |
++-------+-------------------+-----------------------------------------------------------+
+| call  | App\Jobs\TestJob  | /Users/kaka/sites/calject/la-server/app/Jobs/TestJob.php  |
+| back  | App\Jobs\TestJob2 | /Users/kaka/sites/calject/la-server/app/Jobs/TestJob2.php |
+|       | App\Jobs\TestJob3 | /Users/kaka/sites/calject/la-server/app/Jobs/TestJob3.php |
+|       | App\Jobs\TestJob4 | /Users/kaka/sites/calject/la-server/app/Jobs/TestJob4.php |
++-------+-------------------+-----------------------------------------------------------+
+
 ```
 
 

@@ -37,6 +37,8 @@ class QueueListCommand extends Command
                 $class = rtrim(str_replace('/', '\\', str_replace($dirPath, 'App\Jobs', $filePath)), '.php');
                 $info['class'] = $class;
                 $info['path'] = $filePath;
+                // todo: (可选)加入前置判断实现`Illuminate\Contracts\Queue\ShouldQueue`接口
+                
                 if (preg_match("/\\\$this->onQueue\(['\"]+(\w+)['\"]+\)/", $fileContent, $func)) {
                     $queueList[$func[1]][] = $info;
                 } else if (preg_match("/(?:private|protected|public)[ ]+\\\$queue[ =]*['\"]+(\w+)['\"]+/", $fileContent, $property)) {
@@ -54,7 +56,7 @@ class QueueListCommand extends Command
                 }
                 $this->table(['queue', 'class', 'path'], $rows ?? []);
             } else {
-                $this->error("未订生成任何Job类");
+                $this->error("查找失败,不存在已定义的队列任务");
             }
         } else {
             $this->error("Jobs 目录不存在.");
