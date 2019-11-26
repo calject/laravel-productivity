@@ -52,7 +52,7 @@ class EnvConfigCommand extends Command
         $options = CkDef::make($this->argument());
         $is_no_del = ($options['comment'] !== '--d');    // 是否不输出注释 即 #开头的列
         
-        $envArr = (new Dotenv(app()->environmentPath(), app()->environmentFile()))->load();
+        $envArr = Dotenv::create(app()->environmentPath(), app()->environmentFile())->load();
         $file = config_path('env.php');
         
         $sniArr = SnippetArray::create($envArr);
