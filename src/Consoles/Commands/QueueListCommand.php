@@ -38,10 +38,10 @@ class QueueListCommand extends Command
                 $info['class'] = $class;
                 $info['path'] = $filePath;
                 // todo: (可选)加入前置判断实现`Illuminate\Contracts\Queue\ShouldQueue`接口
-                
+                // 不判断异常情况，即多次设置queue的值
                 if (preg_match("/\\\$this->onQueue\(['\"]+(\w+)['\"]+\)/", $fileContent, $func)) {
                     $queueList[$func[1]][] = $info;
-                } else if (preg_match("/(?:private|protected|public)[ ]+\\\$queue[ =]*['\"]+(\w+)['\"]+/", $fileContent, $property)) {
+                } else if (preg_match("/\\\$this->queue[ =]*['\"]+(\w+)['\"]+/", $fileContent, $property)) {
                     $queueList[$property[1]][] = $info;
                 } else {
                     $queueList['default'][] = $info;
